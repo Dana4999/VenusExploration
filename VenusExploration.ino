@@ -39,9 +39,11 @@ void loop()
   //Always loop these functions
   CheckTicks();
   FrontScan();
+  
 
   //The actual algorithm is here
   //TODO
+  Drive(FORWARD, 8);
 }
 
 void countLeftTicks()

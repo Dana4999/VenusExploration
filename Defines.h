@@ -10,3 +10,6 @@
 #define ULTRATURNSCALE 1000
 #define ULTRATURNMIN 75
 #define ULTRATURNANGLE 30
+
+#define LINELEFT    1
+#define LINERIGHT   2
