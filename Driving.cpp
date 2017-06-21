@@ -1,5 +1,6 @@
 #include <Servo.h>
 #include "Driving.h"
+#include "Ultrasound.h"
 #include "Defines.h"
 
 //Variables
@@ -41,6 +42,9 @@ void Drive(int drivingDirection, int ticks)
       rightServo.write(180);
     break;  
   }
+
+  //Start scanning with the ultra sound sensor
+  StartFrontScan();
 }
 
 //Stop function
@@ -48,6 +52,9 @@ void Stop()
 {
   leftServo.write(90);
   rightServo.write(90);
+
+  //Start scanning with the ultra sound sensor
+  StopFrontScan();
 }
 
 //Function to check if the driving goal has been reached

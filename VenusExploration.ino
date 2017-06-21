@@ -1,6 +1,7 @@
 #include <EnableInterrupt.h>
 #include <Servo.h>
 #include "Driving.h"
+#include "Ultrasound.h"
 #include "Defines.h"
 
 //Variables
@@ -10,6 +11,7 @@ volatile int rightTicks;
 //Servos
 Servo leftServo;
 Servo rightServo;
+Servo ultraSoundServo;
 
 void setup()
 {
@@ -26,13 +28,20 @@ void setup()
   //Servo setup
   leftServo.attach(12);
   rightServo.attach(13);
+  ultraSoundServo.attach(11);
 
+  ultraSoundServo.write(ULTRAMIDDLE);
   Stop();
 }
 
 void loop()
 {
+  //Always loop these functions
   CheckTicks();
+  FrontScan();
+
+  //The actual algorithm is here
+  //TODO
 }
 
 void countLeftTicks()
