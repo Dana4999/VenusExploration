@@ -12,6 +12,7 @@ volatile int rightTicks;
 Servo leftServo;
 Servo rightServo;
 Servo ultraSoundServo;
+Servo gripper_servo;
 
 void setup()
 {
@@ -20,6 +21,8 @@ void setup()
   //Pin setup
   pinMode(7, INPUT_PULLUP);       //Left encoder
   pinMode(8, INPUT_PULLUP);       //Right encoder
+  pinMode(A4, INPUT);             //Front beacon sensor
+  pinMode(A5, INPUT);             //Back beacon sensor
 
   //Interrupt setup
   enableInterrupt(7, countLeftTicks, CHANGE);
@@ -29,7 +32,7 @@ void setup()
   leftServo.attach(12);
   rightServo.attach(13);
   ultraSoundServo.attach(11);
-
+  gripper_servo.attach(10);
   ultraSoundServo.write(ULTRAMIDDLE);
   Stop();
 }
@@ -39,11 +42,9 @@ void loop()
   //Always loop these functions
   CheckTicks();
   FrontScan();
-  
 
   //The actual algorithm is here
   //TODO
-  Drive(FORWARD, 8);
 }
 
 void countLeftTicks()
@@ -57,4 +58,3 @@ void countRightTicks()
   rightTicks++;
   Serial.println("Right tick");
 }
-
