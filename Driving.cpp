@@ -6,7 +6,9 @@
 //Variables
 extern volatile int leftTicks;
 extern volatile int rightTicks;
-int tickGoal;
+extern int tickGoal;
+bool ticksDone = false;
+bool currentlyDriving = false;
 
 //Servos
 extern Servo leftServo;
@@ -15,33 +17,40 @@ extern Servo rightServo;
 //Driving function
 void Drive(int drivingDirection, int ticks)
 {
-  Stop();
-
-  //Creating a new smart goal 
-  leftTicks = 0;
-  rightTicks = 0;
-  tickGoal = ticks;
-
-  //Actual driving :)
-  switch(drivingDirection)
+  //Creating a new smart goal
+  if (!currentlyDriving)
   {
-    case FORWARD:
-      leftServo.write(180);
-      rightServo.write(0);
-    break;  
-    case RIGHT:
-      leftServo.write(180);
-      rightServo.write(180);
-    break;  
-    case LEFT:
-      leftServo.write(0);
-      rightServo.write(0);
-    break;  
-    case BACKWARD:
-      leftServo.write(0);
-      rightServo.write(180);
-    break;  
+    currentlyDriving = true;
+    Stop();
+    leftTicks = 0;
+    rightTicks = 0;
+    tickGoal = ticks;
+
+
+    //Actual driving :)
+    switch (drivingDirection)
+    {
+      case FORWARD:
+        leftServo.write(0);
+        rightServo.write(180);
+        break;
+      case RIGHT:
+        leftServo.write(180);
+        rightServo.write(180);
+        break;
+      case LEFT:
+        leftServo.write(0);
+        rightServo.write(0);
+        break;
+      case BACKWARD:
+        leftServo.write(180);
+        rightServo.write(0);
+        break;
+    }
   }
+
+  //check if goal has been achieved
+  //  CheckTicks();
 
   //Start scanning with the ultra sound sensor
   StartFrontScan();
@@ -58,11 +67,14 @@ void Stop()
 }
 
 //Function to check if the driving goal has been reached
-void CheckTicks()
-{    
-  if(leftTicks >= tickGoal || rightTicks >= tickGoal)
+bool CheckTicks()
+{
+  if (leftTicks >= tickGoal || rightTicks >= tickGoal)
   {
-    Stop();  
+    Stop();
+    currentlyDriving = false;
+    return true;
   }
+  return false;
 }
 

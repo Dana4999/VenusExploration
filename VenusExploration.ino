@@ -7,6 +7,7 @@
 //Variables
 volatile int leftTicks;
 volatile int rightTicks;
+int tickGoal;
 
 //Servos
 Servo leftServo;
@@ -32,16 +33,26 @@ void setup()
 
   ultraSoundServo.write(ULTRAMIDDLE);
   Stop();
+
 }
 
 void loop()
 {
   //Always loop these functions
-  CheckTicks();
-  FrontScan();
+//  CheckTicks();
+//  FrontScan();
 
   //The actual algorithm is here
   //TODO
+  
+  Drive(FORWARD, 8);
+  if(CheckTicks())
+  {
+    Drive(RIGHT, 7);
+  }
+  
+  
+
 }
 
 void countLeftTicks()

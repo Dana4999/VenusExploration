@@ -4,6 +4,6 @@
 //Function declarations
 void Drive(int drivingDirection, int ticks);
 void Stop();
-void CheckTicks();
+bool CheckTicks();
 
 #endif //Driving_h
